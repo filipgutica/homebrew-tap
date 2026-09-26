@@ -1,0 +1,32 @@
+name: Formula tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  formulae:
+    name: Formulae (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: Homebrew/actions/setup-homebrew@e99025eb970cfa124b8284a35463d87426917478 # main
+        with:
+          stable: true
+      - name: Audit formulae
+        run: brew audit --strict filipgutica/tap/annoterm filipgutica/tap/wtree
+      - name: Build and test installed tools
+        run: |
+          brew install --build-from-source filipgutica/tap/annoterm filipgutica/tap/wtree
+          brew test filipgutica/tap/annoterm filipgutica/tap/wtree
+          brew linkage --test filipgutica/tap/annoterm filipgutica/tap/wtree

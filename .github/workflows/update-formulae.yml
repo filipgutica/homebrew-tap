@@ -1,0 +1,50 @@
+name: Update formulae
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-formulae
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Download stable releases and open a formula update PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 scripts/update-formulae.py
+          if git diff --quiet -- Formula; then
+            exit 0
+          fi
+          pr_number=$(gh pr list --head chore/update-formulae --base main --state open --json number --jq '.[0].number')
+          if git show-ref --verify --quiet refs/remotes/origin/chore/update-formulae &&
+             git diff --quiet origin/chore/update-formulae -- Formula; then
+            if [ -n "$pr_number" ]; then
+              exit 0
+            fi
+          else
+            git switch -C chore/update-formulae
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add Formula
+            git commit -m 'chore: update tool releases'
+            git push --force-with-lease origin chore/update-formulae
+          fi
+          if [ -z "$pr_number" ]; then
+            gh pr create --base main --head chore/update-formulae \
+              --title 'chore: update tool releases' \
+              --body 'Update source URLs and SHA256 checksums from the latest stable annoterm and wtree releases. Approve the bot workflow runs, review the formula changes, and merge after package checks pass.'
+          fi
