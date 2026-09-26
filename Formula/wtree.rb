@@ -2,7 +2,6 @@ class Wtree < Formula
   desc "Git worktree listing, PR state, and cleanup from the terminal"
   homepage "https://github.com/filipgutica/wtree"
   url "https://github.com/filipgutica/wtree/archive/refs/tags/v0.2.0.tar.gz"
-  version "0.2.0"
   sha256 "49143964869daaead58683c940b715e58773e55ef8108f9287d98e1088af9b80"
 
   depends_on "node"

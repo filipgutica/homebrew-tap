@@ -2,7 +2,6 @@ class Annoterm < Formula
   desc "Local-first terminal Markdown review and editing"
   homepage "https://github.com/filipgutica/annoterm"
   url "https://github.com/filipgutica/annoterm/archive/refs/tags/v0.2.0.tar.gz"
-  version "0.2.0"
   sha256 "328c9678dcd75fdf902e18d9c8274b6a36b9a13941b6f95ddd8cf81746e2ecef"
   license "MIT"
 
