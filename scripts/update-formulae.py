@@ -43,9 +43,16 @@ def update_formula(tool):
     source = formula.read_text()
     current = re.search(r'^  version "(\d+)\.(\d+)\.(\d+)"$', source, re.MULTILINE)
     if current is None:
-        raise ValueError(f"{tool}: formula has no explicit semantic version")
-    if new_version <= tuple(int(part) for part in current.groups()):
-        print(f"{tool}: already at {current.group(0).strip()}")
+        current = re.search(
+            rf'^  url "https://github\.com/filipgutica/{tool}/archive/refs/tags/v(\d+)\.(\d+)\.(\d+)\.tar\.gz"$',
+            source,
+            re.MULTILINE,
+        )
+    if current is None:
+        raise ValueError(f"{tool}: formula has no semantic version or versioned release URL")
+    current_version = tuple(int(part) for part in current.groups())
+    if new_version <= current_version:
+        print(f"{tool}: already at {'.'.join(current.groups())}")
         return
     url = f"https://github.com/filipgutica/{tool}/archive/refs/tags/{tag}.tar.gz"
     checksum = hashlib.sha256()
@@ -54,13 +61,14 @@ def update_formula(tool):
             checksum.update(chunk)
     replacements = {
         "url": url,
-        "version": ".".join(match.groups()),
         "sha256": checksum.hexdigest(),
     }
     for field, value in replacements.items():
         source, count = re.subn(rf'^  {field} "[^"\n]+"$', f'  {field} "{value}"', source, flags=re.MULTILINE)
         if count != 1:
             raise ValueError(f"{tool}: expected exactly one {field} field, found {count}")
+    # Tagged archive URLs let Homebrew infer the version; an explicit version fails strict audit.
+    source = re.sub(r'^  version "[^"\n]+"\n', '', source, flags=re.MULTILINE)
     formula.write_text(source)
     print(f"{tool}: updated to {tag} ({checksum.hexdigest()})")
 
