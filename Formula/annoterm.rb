@@ -1,9 +1,9 @@
 class Annoterm < Formula
   desc "Local-first terminal Markdown review and editing"
   homepage "https://github.com/filipgutica/annoterm"
-  url "https://github.com/filipgutica/annoterm/archive/47d57bd0f9dae55a53519938fdf4ff30fb35975d.tar.gz"
-  version "0.1.0"
-  sha256 "3d73ba2491cb29f92a801d25637cd6a4d5630818e3c96f44b0030c015c0d7d7f"
+  url "https://github.com/filipgutica/annoterm/archive/refs/tags/v0.2.0.tar.gz"
+  version "0.2.0"
+  sha256 "328c9678dcd75fdf902e18d9c8274b6a36b9a13941b6f95ddd8cf81746e2ecef"
   license "MIT"
 
   depends_on "rust" => :build
