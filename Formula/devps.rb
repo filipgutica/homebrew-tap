@@ -3,8 +3,8 @@ class Devps < Formula
 
   desc "See running dev servers, where they came from, and jump to or stop them"
   homepage "https://github.com/filipgutica/devps"
-  url "https://github.com/filipgutica/devps/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "01d0993c4a28253ed21c14eb74274bd4fd43b8752be9c0c228d061710a79e9e1"
+  url "https://github.com/filipgutica/devps/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "10241bd3d6d3ad6a30e25b170f65181e0b609b247c72522093122c816661456b"
   license "MIT"
 
   depends_on "fzf"
