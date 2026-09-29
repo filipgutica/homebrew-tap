@@ -30,3 +30,10 @@ jobs:
           brew install --build-from-source filipgutica/tap/annoterm filipgutica/tap/wtree
           brew test filipgutica/tap/annoterm filipgutica/tap/wtree
           brew linkage --test filipgutica/tap/annoterm filipgutica/tap/wtree
+      # devps reads macOS process state and uses open/osascript, so it has no Linux build.
+      - name: Audit, build, and test macOS-only tools
+        if: runner.os == 'macOS'
+        run: |
+          brew audit --strict filipgutica/tap/devps
+          brew install --build-from-source filipgutica/tap/devps
+          brew test filipgutica/tap/devps

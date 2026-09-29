@@ -46,5 +46,5 @@ jobs:
           if [ -z "$pr_number" ]; then
             gh pr create --base main --head chore/update-formulae \
               --title 'chore: update tool releases' \
-              --body 'Update source URLs and SHA256 checksums from the latest stable annoterm and wtree releases. Approve the bot workflow runs, review the formula changes, and merge after package checks pass.'
+              --body 'Update source URLs and SHA256 checksums from the latest stable annoterm, devps, and wtree releases. Approve the bot workflow runs, review the formula changes, and merge after package checks pass.'
           fi
