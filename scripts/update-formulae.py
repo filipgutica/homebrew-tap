@@ -11,7 +11,7 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
-TOOLS = ("annoterm", "wtree")
+TOOLS = ("annoterm", "devps", "wtree")
 
 
 def latest_release(tool):
