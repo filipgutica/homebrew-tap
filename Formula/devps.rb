@@ -1,19 +1,19 @@
 class Devps < Formula
-  include Language::Python::Shebang
-
   desc "See running dev servers, where they came from, and jump to or stop them"
   homepage "https://github.com/filipgutica/devps"
-  url "https://github.com/filipgutica/devps/archive/refs/tags/v0.1.1.tar.gz"
-  sha256 "10241bd3d6d3ad6a30e25b170f65181e0b609b247c72522093122c816661456b"
+  url "https://github.com/filipgutica/devps/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "6b6385255153cf29456c69636857000d511d945da44cc4337d70b8c328ed40c5"
   license "MIT"
 
   depends_on "fzf"
   depends_on :macos
-  depends_on "python@3.14"
+  depends_on "node"
 
   def install
-    rewrite_shebang detected_python_shebang, "devps"
-    bin.install "devps"
+    system "npm", "ci", "--ignore-scripts"
+    system "npm", "run", "build"
+    system "npm", "install", *std_npm_args
+    bin.install_symlink libexec.glob("bin/*")
   end
 
   test do
