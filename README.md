@@ -12,7 +12,7 @@ brew install filipgutica/tap/wtree
 - [devps](https://github.com/filipgutica/devps): see which dev servers are running, where they came from, and jump to or stop them. macOS only.
 - [wtree](https://github.com/filipgutica/wtree): Git worktree listing, PR state, and cleanup. GitHub CLI (`gh`) is optional for PR state.
 
-annoterm and wtree build from source on macOS and Linux; devps is a macOS-only Python script. Homebrew installs Rust as a build dependency for annoterm, Node as a runtime dependency for wtree, and Python and fzf as runtime dependencies for devps. Initial formulae pin the existing `0.1.0` source commits; subsequent versions use stable GitHub release tags.
+annoterm and wtree build from source on macOS and Linux; devps builds from source on macOS. Homebrew installs Rust to build annoterm, Node to build and run devps and wtree, and fzf for devps. Formulae use stable GitHub release tags.
 
 ## Releases and formula updates
 
