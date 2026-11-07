@@ -1,8 +1,8 @@
 class FilipStack < Formula
   desc "Apply shared agent guidance and setup for Claude and Codex"
   homepage "https://github.com/filipgutica/filip-stack"
-  url "https://github.com/filipgutica/filip-stack/archive/refs/tags/cli-v1.0.0.tar.gz"
-  sha256 "6cd13f66588ece7c00f9f7451b0e3a710f8bc04ed5e2989b605edbd03fd8b6ce"
+  url "https://github.com/filipgutica/filip-stack/archive/refs/tags/cli-v1.1.0.tar.gz"
+  sha256 "e2c6bf4789c94520a544839bf07183f40dccf0e4b61f7f0d7ae2e37a8a8c585d"
   license "MIT"
 
   depends_on "node"
