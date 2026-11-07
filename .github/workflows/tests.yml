@@ -20,6 +20,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
+      - name: Test formula updater
+        run: python3 -B -m unittest discover -s tests
       - uses: Homebrew/actions/setup-homebrew@e99025eb970cfa124b8284a35463d87426917478 # main
         with:
           stable: true
@@ -30,6 +32,14 @@ jobs:
           brew install --build-from-source filipgutica/tap/annoterm filipgutica/tap/wtree
           brew test filipgutica/tap/annoterm filipgutica/tap/wtree
           brew linkage --test filipgutica/tap/annoterm filipgutica/tap/wtree
+      # The updater creates this formula from the first published cli-v release.
+      - name: Audit, install, and test filip-stack
+        if: hashFiles('Formula/filip-stack.rb') != ''
+        run: |
+          brew audit --strict filipgutica/tap/filip-stack
+          brew install --build-from-source filipgutica/tap/filip-stack
+          brew test filipgutica/tap/filip-stack
+          brew linkage --test filipgutica/tap/filip-stack
       # devps reads macOS process state and uses open/osascript, so it has no Linux build.
       - name: Audit, build, and test macOS-only tools
         if: runner.os == 'macOS'
